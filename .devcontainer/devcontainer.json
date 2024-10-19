@@ -1,0 +1,29 @@
+{
+    "name": "Dev Container",
+    "dockerFile": "../Dockerfile.dev",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "window.title": "ToDo App - Dev Container",
+            "terminal.integrated.profiles.linux": {
+                "bash": {
+                    "path": "/bin/bash",
+                    "overrideName": true
+                }
+            }
+        },
+        "extensions": [
+            "ms-vscode-remote.vscode-remote-extensionpack",
+            "editorconfig.editorconfig",
+            "ms-azuretools.vscode-docker",
+            "GitHub.copilot",
+            "ms-vscode-remote.remote-containers",
+            "eamodio.gitlens"
+        ]
+    },
+    "postCreateCommand": "echo 'Container is ready, opening Bash terminal...' && /bin/bash",
+    "runArgs": [
+        "--network=host"
+    ],
+    "remoteUser": "node"
+}

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - broker
+    environment:
+      BROKER_URL: ${BROKER_URL}
+      BROKER_QUEUE: ${BROKER_QUEUE}
+      HEARTBEAT_INTERVAL: ${HEARTBEAT_INTERVAL}
+      RECONNECT_TIME: ${RECONNECT_TIME}
+
+  broker:
+    image: 'rabbitmq:3-management'
+    container_name: broker-rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      DEFAULT_USER: ${DEFAULT_USER}
+      DEFAULT_PASS: ${DEFAULT_PASS}
