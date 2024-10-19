@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppConfigModule } from './config/config.module';
-import { HealthModule } from './health/health.module';
-import { TodoModule } from './todos/todos.module';
+import { TerminusModule } from '@nestjs/terminus';
+import { HealthService } from './health.service';
+import { HealthController } from './health.controller';
 
 @Module({
   imports: [
-    AppConfigModule,
+    HttpModule,
+    TerminusModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -22,9 +24,8 @@ import { TodoModule } from './todos/todos.module';
         synchronize: true,
       }),
     }),
-    HealthModule,
-    TodoModule,
   ],
+  controllers: [HealthController],
+  providers: [HealthService],
 })
-export class AppModule { }
-
+export class HealthModule {}

@@ -1,9 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
 
-@Controller('livetest')
-export class LiveTestController {
+@Controller('todos')
+export class TodosController {
   @Get()
-  checkLiveTest() {
+  get() {
     return { message: 'Application is running correctly' };
   }
 }

@@ -40,8 +40,10 @@ I like to handle the posibility to add services inside the webhook service to ha
 
 ## Use Docker
 
-1. Run 
-```bash
-  docker-compose --env-file .env up --build
-```
+1. Run the following command to build the image and start the container:
+
+  ```bash
+    docker-compose --env-file .env up --build
+  ```
+
 2. Send a POST request to `http://localhost:3000/webhook` with a JSON payload.

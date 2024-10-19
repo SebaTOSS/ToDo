@@ -1,25 +1,35 @@
-version: '3.8'
+version: '3'
 
 services:
   app:
     build: .
-    container_name: app
+    container_name: todo-app
     ports:
-      - '3000:3000'
+      - '${PORT}:${PORT}'
+    volumes:
+      - .:/app
+      - /app/node_modules
     depends_on:
-      - broker
-    environment:
-      BROKER_URL: ${BROKER_URL}
-      BROKER_QUEUE: ${BROKER_QUEUE}
-      HEARTBEAT_INTERVAL: ${HEARTBEAT_INTERVAL}
-      RECONNECT_TIME: ${RECONNECT_TIME}
+      - database
 
-  broker:
-    image: 'rabbitmq:3-management'
-    container_name: broker-rabbitmq
-    ports:
-      - '5672:5672'
-      - '15672:15672'
+  database:
+    image: postgres
+    container_name: database
     environment:
-      DEFAULT_USER: ${DEFAULT_USER}
-      DEFAULT_PASS: ${DEFAULT_PASS}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command:
+        [
+            "-c",
+            "log_statement=none",
+            "-c",
+            "log_destination=stderr"
+        ]
+
+volumes:
+  postgres_data:
