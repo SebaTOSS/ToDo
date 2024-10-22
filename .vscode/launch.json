@@ -4,7 +4,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch NestJS",
+            "name": "Local",
             "skipFiles": ["<node_internals>/**"],
             "program": "${workspaceFolder}/src/main.ts",
             "preLaunchTask": "tsc: build - tsconfig.json",
