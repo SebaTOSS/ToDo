@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfigModule } from './config/config.module';
+import { CoreModule } from './core/core.module';
 import { HealthModule } from './health/health.module';
 import { TodoModule } from './todos/todos.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -22,7 +24,9 @@ import { TodoModule } from './todos/todos.module';
         synchronize: true,
       }),
     }),
+    CoreModule,
     HealthModule,
+    UsersModule,
     TodoModule,
   ],
 })
