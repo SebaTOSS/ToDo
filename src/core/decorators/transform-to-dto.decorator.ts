@@ -9,6 +9,7 @@ export function TransformToDto(dtoClass: any) {
       if (Array.isArray(result)) {
         return result.map(item => plainToInstance(dtoClass, item));
       }
+      
       return plainToInstance(dtoClass, result);
     };
 

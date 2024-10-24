@@ -1,10 +1,10 @@
+import * as bcrypt from 'bcrypt';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, SelectQueryBuilder } from 'typeorm';
 import { TransformToDto } from '../core';
 import { UserDto, CreateUserDto, UpdateUserDto, UserFiltersDto } from './dto';
 import { User } from './entities';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -32,6 +32,28 @@ export class UsersService {
         }
 
         return user;
+    }
+
+    @TransformToDto(UserDto)
+    async findOneByEmail(email: string): Promise<User> {
+        const user = await this.usersRepository.findOne({ where: { email } });
+        if (user) {
+            return user;
+        }
+
+        return null;
+    }
+
+    @TransformToDto(UserDto)
+    async findOneByEmailAndPassword(email: string, password: string): Promise<User> {
+        const query = { where: { email, isActive: true } };
+        const user = await this.usersRepository.findOne(query);
+        
+        if (user && await bcrypt.compare(password, user.password)) {
+            return user;
+        }
+        
+        return null;
     }
 
     @TransformToDto(UserDto)
@@ -127,9 +149,5 @@ export class UsersService {
 
     private async hashPassword(password: string): Promise<string> {
         return bcrypt.hash(password, 10);
-    }
-
-    private async validatePassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
-        return bcrypt.compare(plainPassword, hashedPassword);
     }
 }
