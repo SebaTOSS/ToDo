@@ -1,8 +1,8 @@
-import { Controller, Post, Body, UseGuards, Req, UnauthorizedException, Request } from '@nestjs/common';
-import { ExtractJwt } from 'passport-jwt';
+import { Controller, Post, Body, UseGuards, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { Token } from './decorators';
 import { CreateUserDto } from '../users/dto';
 
 @Controller('auth')
@@ -21,23 +21,13 @@ export class AuthController {
 
     @Post('refresh')
     @UseGuards(JwtAuthGuard)
-    async refresh(@Req() req: any) {
-        const token = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
-        if (!token) {
-            throw new UnauthorizedException('Token not found');
-        }
-
+    async refresh(@Token() token: string) {
         return this.authService.refresh(token);
     }
 
     @Post('logout')
     @UseGuards(JwtAuthGuard)
-    async logout(@Req() req: any) {
-        const token = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
-        if (!token) {
-            throw new UnauthorizedException('Token not found');
-        }
-
+    async logout(@Token() token: string) {
         return this.authService.logout(token);
     }
 }
