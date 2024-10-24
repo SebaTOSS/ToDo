@@ -2,8 +2,6 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards 
 import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto, UserFiltersDto } from './dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { LoggedUser } from '../core';
-import { LoggedUserDto } from '../auth/dto';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard)
