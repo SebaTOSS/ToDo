@@ -97,7 +97,7 @@ export class UsersService {
         try {
             await this.usersRepository.save(user);
         } catch (error) {
-            throw new NotFoundException(`User ${id} not removed`);
+            throw new Error(`User ${id} not removed`);
         }
 
         return null;
@@ -113,7 +113,7 @@ export class UsersService {
         try {
             await this.usersRepository.save(user);
         } catch (error) {
-            throw new NotFoundException(`User ${id} not reactivated`);
+            throw new Error(`User ${id} not reactivated`);
         }
 
         return null;

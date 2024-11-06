@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 
 @Module({
   controllers: [],
-  providers: [],
+  providers: [Logger],
 })
 export class CoreModule {}

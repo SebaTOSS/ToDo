@@ -11,5 +11,5 @@ export class UpdateUserDto{
 
     @IsString()
     @IsOptional()
-    readonly password: string;
+    readonly password?: string;
 }

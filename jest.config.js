@@ -5,7 +5,14 @@ module.exports = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
-  collectCoverageFrom: ['**/*.(t|j)s'],
+  collectCoverageFrom: [
+    '**/*.(t|j)s',
+    '!**/migrations/**',
+    '!**/index.(t|j)s',
+  ],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
+  modulePathIgnorePatterns: [
+    '<rootDir>/migrations/',
+  ],
 };
